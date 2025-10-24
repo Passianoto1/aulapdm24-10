@@ -13,14 +13,17 @@ if ('serviceWorker' in navigator) {
 }
 
 let posicaoInicial;
+const irLocalizacao = document.getElementById('ir')
 const capturarLocalizacao = document.getElementById('localizacao')
 const latitude = document.getElementById('latitude')
 const longitude = document.getElementById('longitude')
+const mapa = document.getElementById('gmap_canvas')
 
 const sucesso = (posicao) => {
   posicaoInicial = posicao
   latitude.innerHTML = posicaoInicial.coords.latitude
   longitude.innerHTML = posicaoInicial.coords.longitude
+  mapa.src = "https://maps.google.com/maps?q="+ posicaoInicial.coords.latitude +","+ posicaoInicial.coords.longitude + "=&z=13&ie=UTF8&iwloc=&output=embed"
 
 }
 
@@ -46,4 +49,10 @@ const erro = (error) => {
 
 capturarLocalizacao.addEventListener('click', () => {
   navigator.geolocation.getCurrentPosition(sucesso, erro)
+})
+
+irLocalizacao.addEventListener('click', () => {
+  posicaoInicial.coords.latitude = document.getElementById('latinput').value
+  posicaoInicial.coords.longitude = document.getElementById('longinput').value
+  navigator.geolocation.getCurrentPosition(sucessoIr, erro)
 })
